@@ -1,0 +1,31 @@
+
+name: Deploy terraform
+
+on:
+ 
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+      
+      - name: Grant execute permission to infrastructure script
+        run: chmod +x ./scripts/infrastructure.sh
+
+     
+      - name: Deploy Infrastructure
+        run: ./scripts/infrastructure.sh
