@@ -50,5 +50,6 @@ jobs:
  
       - name: Deploy
         run: |
-          chmod +x ./scripts/push-image.sh  # Ensure the script is executable
-          ./scripts/push-image.sh
+          run: |
+          chmod +x ./scripts/deploy.sh  # Ensure the script is executable
+          ./scripts/deploy.sh
