@@ -14,7 +14,7 @@ echo "Creating Terraform plan..."
 terraform plan -out=tfplan
 
 echo "Applying the Terraform plan..."
-terraform apply tfplan
+terraform apply -auto-approve tfplan
 
 rm -f tfplan
 
