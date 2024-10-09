@@ -1,0 +1,27 @@
+name: Print Azure Service Principal Details
+
+on: 
+  workflow_dispatch:  
+jobs:
+  print-sp-details:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Print Service Principal Details
+        run: |
+          echo "Listing Azure Service Principals:"
+          az ad sp list --query "[].{Name:displayName, AppId:appId}" --output table
+
+      - name: Print Specific Service Principal Details
+        run: |
+          SP_APP_ID="<YourAppId>"  # Replace with your service principal's AppId
+          echo "Fetching details for Service Principal with AppId: $SP_APP_ID"
+          az ad sp show --id $SP_APP_ID
