@@ -1,0 +1,48 @@
+
+
+name: Deploy inventory management
+
+on:
+  
+  push: 
+    branches:
+      - main
+    paths:
+      - inventory_management/**
+
+  
+  workflow_dispatch: 
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+    
+    env:
+      VERSION: ${{ github.sha }}
+      CONTAINER_REGISTRY: ${{ secrets.CONTAINER_REGISTRY }}
+      REGISTRY_UN: ${{ secrets.REGISTRY_UN }}
+      REGISTRY_PW: ${{ secrets.REGISTRY_PW  }}
+      NAME: inventory_management
+      DIRECTORY: inventory_management
+
+    steps:
+      
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: ./scripts/build-image.sh
+
+      - name: Publish
+        run: ./scripts/push-image.sh
+
+    
+      # https://github.com/marketplace/actions/kubernetes-cli-kubectl
+      #
+      - uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBE_CONFIG }}
+          kubectl-version: v1.24.2
+ 
+      - name: Deploy
+        run: ./scripts/deploy.sh
