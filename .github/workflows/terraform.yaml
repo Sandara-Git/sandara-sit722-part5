@@ -24,8 +24,8 @@ jobs:
           terraform_wrapper: false
       
       - name: Grant execute permission to infrastructure script
-        run: chmod +x ./scripts/infrastructure.sh
+        run: chmod +x ./scripts/terraform.sh
 
      
       - name: Deploy Infrastructure
-        run: ./scripts/infrastructure.sh
+        run: ./scripts/terraform.sh
