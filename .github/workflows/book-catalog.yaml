@@ -51,4 +51,6 @@ jobs:
 
      
       - name: Deploy
-        run: ./scripts/deploy.sh
+        run: |
+          chmod +x ./scripts/deploy.sh  # Ensure the script is executable
+          ./scripts/deploy.sh
