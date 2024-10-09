@@ -30,13 +30,16 @@ jobs:
 
 
       - name: Build
-        run: ./scripts/build-image.sh
+        run: |
+          chmod +x ./scripts/build-image.sh  # Ensure the script is executable
+          ./scripts/build-image.sh
 
     
       #
       - name: Publish
-        run: ./scripts/push-image.sh
-
+        run: |
+          chmod +x ./scripts/push-image.sh  # Ensure the script is executable
+          ./scripts/push-image.sh
       
       #
       # https://github.com/marketplace/actions/kubernetes-cli-kubectl
